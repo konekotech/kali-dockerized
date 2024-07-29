@@ -1,0 +1,21 @@
+#!/bin/sh
+
+export KALI_HOME=${1:-$(pwd)}
+
+# if KALI_HOME is $HOME, DO NOT EXECUTE DOCKER COMPOSE
+
+if [ "$KALI_HOME" = "$HOME" ]; then
+    echo "You are now in the home directory. Exiting..."
+    export -n KALI_HOME
+    exit 1
+fi
+
+cd ~/docker/kali-dockerized
+docker compose up -d kali
+docker compose exec kali zsh
+
+# cleanup
+echo "Exiting..."
+stop-kali
+exit 0
+    

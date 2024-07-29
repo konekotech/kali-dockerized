@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# docker psをして、kali-dockerizedを探す。もしあれば、そのコンテナのイメージをコミットして、新しいイメージを作成する。
+# その後、kali-dockerizedを停止する。
+
+docker ps | grep kali-dockerized-kali
+if [ $? -eq 0 ]; then
+  docker commit $(docker ps | grep kali-dockerized-kali | awk '{print $1}') kali-dockerized-kali
+  docker stop $(docker ps | grep kali-dockerized-kali | awk '{print $1}')
+fi
+
+cd ~/docker/kali-dockerized
+docker compose down
+export -n KALI_HOME
