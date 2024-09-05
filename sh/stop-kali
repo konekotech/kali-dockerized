@@ -3,12 +3,14 @@
 # docker psをして、kali-dockerizedを探す。もしあれば、そのコンテナのイメージをコミットして、新しいイメージを作成する。
 # その後、kali-dockerizedを停止する。
 
-docker ps | grep kali-dockerized-kali
+docker ps | grep konekotech/kali
+docker tag konekotech/kali:latest konekotech/kali:old
 if [ $? -eq 0 ]; then
-  docker commit $(docker ps | grep kali-dockerized-kali | awk '{print $1}') kali-dockerized-kali
-  docker stop $(docker ps | grep kali-dockerized-kali | awk '{print $1}')
+  docker commit $(docker ps | grep konekotech/kali | awk '{print $1}') konekotech/kali:latest
+  docker stop $(docker ps | grep konekotech/kali | awk '{print $1}')
 fi
-
 cd ~/docker/kali-dockerized
 docker compose down
+docker push konekotech/kali:latest
+docker rmi konekotech/kali:old
 export -n KALI_HOME

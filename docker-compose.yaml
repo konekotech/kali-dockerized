@@ -4,13 +4,15 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./kali
-    #image: 'kalilinux/kali-rolling'
+    image: 'konekotech/kali:latest'
     container_name: kali
     tty: true
     restart: always
     privileged: true   # Add the privileged option, SYS_ADMIN is limited, where privileged has full access
     network_mode: host
     stdin_open: true
+    environment:
+      - DISPLAY=host.docker.internal:0
     working_dir: /home
     volumes:
       - $KALI_HOME:/home
