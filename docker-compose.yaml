@@ -18,6 +18,7 @@ services:
       - $KALI_HOME:/home
     ports:
     - 127.0.0.1:8085:8085
+    command: "/app/docker-systemd.sh /bin/bash"
 
   ubuntu:
     build:
